@@ -1,8 +1,16 @@
 # server.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import os, requests, json, re
+import os, requests, json, re, base64, io
 from openai import OpenAI
+
+# Optional OCR imports (for /check_image)
+try:
+    from PIL import Image
+    import pytesseract
+    OCR_AVAILABLE = True
+except Exception:
+    OCR_AVAILABLE = False
 
 # --- config (safe) ---
 MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo-0125")
@@ -71,26 +79,9 @@ def extract_json(text: str):
             pass
     return None
 
-@app.get("/")
-def root():
-    return jsonify({
-        "name": "Health Claims Checker API",
-        "endpoints": {"GET /verify": "health check", "POST /check": "body: { text: string }"}
-    })
-
-@app.get("/verify")
-def verify():
-    return jsonify({"ok": True, "model": MODEL})
-
-@app.post("/check")
-def check():
-    data = request.get_json(silent=True) or {}
-    text = (data.get("text") or "").strip()
-    if not text:
-        return jsonify({"verdict":"uncertain","reason":"No text provided","sources":[]}), 400
-
+# ---- shared checker (reuses your exact logic) ----
+def check_text_internal(text: str):
     web_sources = bing_search(text)
-
     try:
         resp = client.chat.completions.create(
             model=MODEL,
@@ -102,11 +93,11 @@ def check():
         )
         raw = (resp.choices[0].message.content or "").strip()
     except Exception as e:
-        return jsonify({
+        return {
             "verdict":"uncertain",
             "reason":f"Model call failed: {e.__class__.__name__}",
             "sources": web_sources
-        }), 502
+        }
 
     j = extract_json(raw) or {}
     v = str(j.get("verdict", "uncertain")).lower()
@@ -121,7 +112,67 @@ def check():
     if not ss:
         ss = web_sources
 
-    return jsonify({"verdict": v, "reason": j.get("reason","") or "", "sources": ss})
+    return {"verdict": v, "reason": j.get("reason","") or "", "sources": ss}
+
+# ---- routes (your originals retained) ----
+@app.get("/")
+def root():
+    return jsonify({
+        "name": "Health Claims Checker API",
+        "endpoints": {
+            "GET /verify": "health check",
+            "POST /check": "body: { text: string }",
+            "POST /check_image": "body: { image: dataURL or base64 }"
+        }
+    })
+
+@app.get("/verify")
+def verify():
+    return jsonify({"ok": True, "model": MODEL})
+
+@app.post("/check")
+def check():
+    data = request.get_json(silent=True) or {}
+    text = (data.get("text") or "").strip()
+    if not text:
+        return jsonify({"verdict":"uncertain","reason":"No text provided","sources":[]}), 400
+    return jsonify(check_text_internal(text))
+
+# ---- NEW: /check_image (OCR -> reuse same checker) ----
+def _image_from_payload(b64_or_dataurl: str):
+    s = (b64_or_dataurl or "").strip()
+    if s.startswith("data:image/"):
+        s = s.split(",", 1)[-1]
+    raw = base64.b64decode(s)
+    from PIL import Image  # defer import if PIL not present earlier
+    return Image.open(io.BytesIO(raw)).convert("RGB")
+
+@app.post("/check_image")
+def check_image():
+    if not OCR_AVAILABLE:
+        return jsonify({"error":"OCR not available on server"}), 500
+
+    data = request.get_json(silent=True) or {}
+    img_payload = data.get("image")
+    if not img_payload:
+        return jsonify({"error":"No image"}), 400
+
+    try:
+        img = _image_from_payload(img_payload)
+    except Exception:
+        return jsonify({"error":"Invalid image data"}), 400
+
+    try:
+        text = (pytesseract.image_to_string(img) or "").strip()
+    except Exception as e:
+        return jsonify({"error": f"OCR failed: {e.__class__.__name__}"}), 502
+
+    if not text:
+        return jsonify({"verdict":"uncertain","reason":"OCR found no text","sources":[], "ocr_text": ""})
+
+    out = check_text_internal(text)
+    out["ocr_text"] = text
+    return jsonify(out)
 
 if __name__ == "__main__":
     # Access from LAN; use your IP 192.168.1.6 in the extension

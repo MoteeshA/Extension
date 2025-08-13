@@ -3,7 +3,7 @@
   "name": "HealthGuard Checker",
   "version": "1.0.0",
   "description": "Highlight any health claim to see a quick fact-check with trusted sources.",
-  "permissions": ["storage", "contextMenus", "activeTab", "scripting"],
+  "permissions": ["storage", "contextMenus", "activeTab", "scripting", "tabs"],
   "host_permissions": [
     "http://192.168.1.6:8000/*",
     "http://localhost:8000/*",
@@ -16,14 +16,11 @@
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js": ["content.js"],
-    "run_at": "document_idle"
-  }],
-  "icons": {
-    "16": "icon16.png",
-    "32": "icon32.png",
-    "128": "icon128.png"
-  }
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
 }

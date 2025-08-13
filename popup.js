@@ -10,6 +10,7 @@ const sourcesEl  = document.getElementById("sources");
 const enabledTgl = document.getElementById("enabledToggle");
 const autoTgl    = document.getElementById("autoToggle");
 const testBtn    = document.getElementById("testInline");
+const captureBtn = document.getElementById("captureBtn"); // NEW
 
 function setBadge(v) {
   const cls = (v || "uncertain").toLowerCase();
@@ -47,7 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 enabledTgl.addEventListener("change", async () => {
   await chrome.storage.sync.set({ hgEnabled: enabledTgl.checked });
-  // update badge immediately
   await chrome.action.setBadgeBackgroundColor({ color: enabledTgl.checked ? "#10b981" : "#777" });
   await chrome.action.setBadgeText({ text: enabledTgl.checked ? "ON" : "" });
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -73,7 +73,6 @@ btn.addEventListener("click", async () => {
       .join("");
     result.classList.remove("hidden");
 
-    // also show inline bubble
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab?.id) chrome.tabs.sendMessage(tab.id, { type: "SHOW_INLINE_RESULT", payload: data });
   } catch (e) {
@@ -95,4 +94,15 @@ testBtn.addEventListener("click", async () => {
   };
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.id) chrome.tabs.sendMessage(tab.id, { type: "SHOW_INLINE_RESULT", payload: fake });
+});
+
+// NEW: start region capture in the active tab
+captureBtn.addEventListener("click", async () => {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tab?.id) {
+      await chrome.tabs.sendMessage(tab.id, { type: "START_REGION_CAPTURE" });
+      window.close(); // let the user drag immediately
+    }
+  } catch (e) { console.error(e); }
 });
