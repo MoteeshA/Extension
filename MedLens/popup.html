@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HealthGuard</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h1>HealthGuard</h1>
+
+    <label class="row">
+      <input type="checkbox" id="enabledToggle" />
+      <span>Enable extension (clicking the icon also toggles)</span>
+    </label>
+
+    <label class="row">
+      <input type="checkbox" id="autoToggle" />
+      <span>Auto-check when I highlight text</span>
+    </label>
+
+    <div class="lbl">Paste or edit a claim:</div>
+    <textarea id="claimInput" placeholder="e.g., 'Vitamin C cures the common cold'"></textarea>
+    <button id="checkBtn">Check claim</button>
+    <button class="ghost" id="testInline">Test inline bubble (no API)</button>
+
+    <div class="lbl" style="margin-top:12px;">Or drop/paste an image</div>
+    <div id="dropArea" tabindex="0" title="Drop or paste an image here">
+      <div id="dropHint">Drop image here or press ⌘/Ctrl+V to paste</div>
+      <img id="imgPreview" alt="Preview" class="hidden" />
+      <div class="row" style="gap:8px; margin-top:8px;">
+        <button id="captureBtn">Capture on page</button>
+      </div>
+    </div>
+
+    <div id="result" class="hidden">
+      <div id="badge" class="badge uncertain">UNCERTAIN</div>
+      <div class="reason-wrap">
+        <div class="lbl">Reason</div>
+        <div id="reason" class="reason"></div>
+      </div>
+      <div class="lbl">Sources</div>
+      <div id="sources" class="sources"></div>
+
+      <div class="lbl">OCR Text</div>
+      <pre id="ocrText" class="ocr"></pre>
+    </div>
+
+    <!-- ===== NEW: Page scan controls ===== -->
+    <div class="lbl" style="margin-top:12px;">Scan current page</div>
+    <div class="row" style="gap:8px;">
+      <button id="scanPageBtn">Scan full page</button>
+      <button class="ghost" id="clearHighlightsBtn">Clear highlights</button>
+    </div>
+
+    <!-- ===== NEW: Voice (mic + Swara TTS via background proxy) ===== -->
+    <div class="lbl" style="margin-top:14px;">Ask by Voice or Text</div>
+    <div id="voiceWrap" class="row" style="gap:8px;">
+      <input id="voiceInput" type="text" placeholder="Ask or paste a claim…" style="flex:1; padding:10px 12px; border:1px solid #ddd; border-radius:8px;" />
+      <button id="voiceMic" title="Speak" class="ghost" style="width:44px; height:44px;">🎤</button>
+      <button id="voiceAsk" class="ghost">Ask</button>
+    </div>
+    <div id="voiceResult" class="hidden" style="margin-top:8px;">
+      <div id="voiceBadge" class="badge uncertain">UNCERTAIN</div>
+      <div class="reason-wrap">
+        <div class="lbl">Reason</div>
+        <div id="voiceReason" class="reason"></div>
+      </div>
+      <div class="lbl">Sources</div>
+      <div id="voiceSources" class="sources"></div>
+      <audio id="voiceAudio" playsinline preload="auto" style="display:none;"></audio>
+    </div>
+    <!-- ===== /Voice ===== -->
+
+    <script src="popup.js"></script>
+  </body>
+</html>
