@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediLens - Verify Medical Information with AI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="home">
+  <!-- Header stays the same -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">🔍</div>
+          <h1>MediLens</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#statistics">Impact</a></li>
+            <li class="dropdown">
+              <a href="#sources" class="dropdown-toggle">Sources <span class="dropdown-arrow">▼</span></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.who.int" target="_blank" rel="noopener">WHO</a></li>
+                <li><a href="https://www.cdc.gov" target="_blank" rel="noopener">CDC</a></li>
+                <li><a href="https://www.nhs.uk" target="_blank" rel="noopener">NHS</a></li>
+                <li><a href="https://www.hrsa.gov" target="_blank" rel="noopener">HRSA</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+            <!-- New Get Extension button -->
+            <li><a href="#" class="cta-button extension-button">Get Extension</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with image slideshow -->
+  <section class="hero">
+    <div class="container">
+      <div class="slideshow-container">
+        
+       <!-- Slide 1 with video -->
+<div class="slide active">
+  <div class="slide-content">
+    <div class="slide-image">
+      <video src="vid.mp4" autoplay muted loop playsinline></video>
+    </div>
+  </div>
+</div>
+
+        
+
+        <!-- Slide indicators -->
+        <div class="slide-indicators">
+          <span class="indicator active" data-slide="0"></span>
+          <span class="indicator" data-slide="1"></span>
+          <span class="indicator" data-slide="2"></span>
+        </div>
+
+      </div>
+
+      <h2>Fight Medical Misinformation with AI</h2>
+      <p>Verify health information instantly from text, PDFs, and images using trusted sources like WHO, CDC, and NHS</p>
+      <a href="verify.html" class="cta-button">Try MediLens Now</a>
+
+      <div class="color-legend">
+        <div class="legend-item">
+          <div class="color-box verified"></div>
+          <span>Verified Information</span>
+        </div>
+        <div class="legend-item">
+          <div class="color-box caution"></div>
+          <span>Needs Verification</span>
+        </div>
+        <div class="legend-item">
+          <div class="color-box false"></div>
+          <span>False Information</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- All other sections (Features, Statistics, Sources, Impact, Footer) remain unchanged -->
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <h3>Powerful Verification Features</h3>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon text-verification">📝</div>
+          <h4>Text Verification</h4>
+          <p>Paste any health-related text and get instant verification against trusted medical sources with color-coded accuracy indicators.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon pdf-scanning">📄</div>
+          <h4>PDF Analysis</h4>
+          <p>Upload medical documents, research papers, or health articles. Our AI extracts and verifies all medical claims automatically.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon image-analysis">🖼️</div>
+          <h4>Image Recognition</h4>
+          <p>Scan images containing health information, infographics, or medical advice. We extract text and verify its accuracy instantly.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon browser-extension">🌐</div>
+          <h4>Browser Extension</h4>
+          <p>Verify health information on any website with one click. Select text or use our popup to check medical claims in real-time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics -->
+  <section class="statistics" id="statistics">
+    <div class="container">
+      <h3>The Misinformation Crisis</h3>
+      <div class="stats-grid">
+        <div class="stat-card animate-on-scroll">
+          <div class="stat-number">70%</div>
+          <div class="stat-text">of people have encountered health misinformation online</div>
+        </div>
+        <div class="stat-card animate-on-scroll">
+          <div class="stat-number">1 in 3</div>
+          <div class="stat-text">have acted on false health advice</div>
+        </div>
+        <div class="stat-card animate-on-scroll">
+          <div class="stat-number">6×</div>
+          <div class="stat-text">faster - misinformation spreads compared to verified facts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted Sources -->
+  <section class="trusted-sources" id="sources">
+    <div class="container">
+      <h3>Verified by Trusted Sources</h3>
+      <div class="sources-grid">
+        <a href="https://www.who.int" target="_blank" rel="noopener" class="source-logo animate-on-scroll">
+          <div style="font-size: 2rem; color: #0073e6; margin-bottom: 15px;">🌍</div>
+          <h4>WHO</h4>
+          <p>World Health Organization</p>
+        </a>
+        <a href="https://www.cdc.gov" target="_blank" rel="noopener" class="source-logo animate-on-scroll">
+          <div style="font-size: 2rem; color: #005fcc; margin-bottom: 15px;">🏛️</div>
+          <h4>CDC</h4>
+          <p>Centers for Disease Control</p>
+        </a>
+        <a href="https://www.nhs.uk" target="_blank" rel="noopener" class="source-logo animate-on-scroll">
+          <div style="font-size: 2rem; color: #005eb8; margin-bottom: 15px;">🏥</div>
+          <h4>NHS</h4>
+          <p>National Health Service</p>
+        </a>
+        <a href="https://sdgs.un.org/goals/goal3" target="_blank" rel="noopener" class="source-logo animate-on-scroll">
+          <div style="font-size: 2rem; color: #00a1c9; margin-bottom: 15px;">🎯</div>
+          <h4>SDG 3</h4>
+          <p>Good Health & Well-being</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section class="impact">
+    <div class="container">
+      <h3>The Real Impact of Health Misinformation</h3>
+      <div class="impact-grid">
+        <div class="impact-card animate-on-scroll">
+          <h4>🚨 Wrong Treatments</h4>
+          <p>People take unsafe remedies like bleach cures for COVID, leading to poisoning and health complications.</p>
+        </div>
+        <div class="impact-card animate-on-scroll">
+          <h4>⏰ Delayed Diagnosis</h4>
+          <p>Health myths discourage early screening for diseases like cancer, reducing survival chances.</p>
+        </div>
+        <div class="impact-card animate-on-scroll">
+          <h4>💔 Loss of Trust</h4>
+          <p>Misinformation erodes faith in healthcare institutions and scientific evidence.</p>
+        </div>
+        <div class="impact-card animate-on-scroll">
+          <h4>💉 Vaccine Hesitancy</h4>
+          <p>False vaccine information leads to resurgence of preventable diseases like measles and polio.</p>
+        </div>
+        <div class="impact-card animate-on-scroll">
+          <h4>💰 Economic Costs</h4>
+          <p>More hospitalizations and preventable complications strain healthcare systems worldwide.</p>
+        </div>
+        <div class="impact-card animate-on-scroll">
+          <h4>✅ MediLens Solution</h4>
+          <p>We provide alternate verified information for any false claims, helping users make informed decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <p>&copy; 2025 MediLens. Fighting health misinformation with AI-powered verification.</p>
+      <p>Trusted by healthcare professionals worldwide</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

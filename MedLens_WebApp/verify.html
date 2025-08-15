@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verify Content | MediLens</title>
+  <meta name="description" content="Verify medical content by pasting text or uploading images and PDFs. See results instantly in the output panel.">
+
+  <!-- Your main site styles (unchanged) -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Verify page specific styles (unchanged; you pasted them as verify.css) -->
+  <link rel="stylesheet" href="verify.css">
+
+  <!-- PDF tools (browser-only) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body id="verify">
+  <!-- Header (unchanged) -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">🔍</div>
+          <h1>MediLens</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#statistics">Impact</a></li>
+            <li class="dropdown">
+              <a href="index.html#sources" class="dropdown-toggle">Sources <span class="dropdown-arrow">▼</span></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.who.int" target="_blank" rel="noopener">WHO</a></li>
+                <li><a href="https://www.cdc.gov" target="_blank" rel="noopener">CDC</a></li>
+                <li><a href="https://www.nhs.uk" target="_blank" rel="noopener">NHS</a></li>
+                <li><a href="https://www.hrsa.gov" target="_blank" rel="noopener">HRSA</a></li>
+              </ul>
+            </li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="#" class="cta-button extension-button">Get Extension</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Intro (unchanged) -->
+  <section class="container verify-header">
+    <h2>Verify Content</h2>
+    <p class="subtitle">
+      Paste text or upload files (images, PDFs, docs). Your analysis will appear alongside in real-time.
+    </p>
+  </section>
+
+  <!-- Two-column layout -->
+  <main class="container grid">
+    <!-- Input -->
+    <section class="card">
+      <div class="card-header">Input</div>
+      <div class="card-content">
+        <label for="verification-text">Enter text</label>
+        <textarea id="verification-text" placeholder="Paste or type the content you want to verify..."></textarea>
+
+        <label for="file-upload">Or upload files</label>
+        <input type="file" id="file-upload" multiple accept="application/pdf,image/*,.doc,.docx,.rtf,.txt" hidden>
+        <div id="upload-label" class="upload-drop">
+          <span class="upload-title">Click to upload</span>
+          <span class="upload-sub">or drag and drop (images, PDFs, docs)</span>
+        </div>
+        <ul id="file-list"></ul>
+
+        <div class="action-row">
+          <button id="run-btn" disabled>Run Verification</button>
+          <!-- removed Scan Page & Capture Region -->
+          <button id="download-btn" disabled title="Download highlighted PDF">Download Highlighted PDF</button>
+          <button id="clear-btn" title="Clear">Clear</button>
+          <p class="note">PDFs will be OCR’d/extracted, verified, highlighted, and made downloadable.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Output -->
+    <section class="card">
+      <div class="card-header">Output</div>
+      <div class="card-content">
+        <div class="output-box">
+          <p>Results will appear here after you submit content.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer (unchanged) -->
+  <footer id="contact">
+    <div class="container">
+      <p>&copy; 2025 MediLens. Fighting health misinformation with AI-powered verification.</p>
+      <p>Trusted by healthcare professionals worldwide</p>
+    </div>
+  </footer>
+
+  <script src="verify.js"></script>
+</body>
+</html>
